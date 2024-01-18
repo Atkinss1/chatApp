@@ -21,8 +21,6 @@ $('form').on('submit', sendMessage);
 // Listen for messages
 
 socket.on('message', (data) => {
-  //! console logs dynamic key: {data} fix later
-  console.log(data);
   // create an li element
   const $li = $('<li></li>');
   // set content of li to data ( which is the message from the server );
