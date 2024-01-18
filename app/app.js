@@ -8,22 +8,22 @@ const socket = new WebSocket('ws://localhost:3000');
  */
 function sendMessage(e) {
   e.preventDefault();
-  const input = document.querySelector('input');
-  if (input.value) {
-    socket.send(input.value);
-    input.value = '';
+  const $input = $('input');
+  if ($input.val()) {
+    socket.send($input.val());
+    $input.val('');
   }
-  input.focus();
+  $input.focus();
 }
 
-document.querySelector('form').addEventListener('submit', sendMessage);
+$('form').on('submit', sendMessage);
 
 // Listen for messages
 
 socket.addEventListener('message', ({ data }) => {
   // create an li element
-  const li = document.createElement('li');
+  const $li = $('<li></li>');
   // set content of li to data ( which is the message from the server );
-  li.textContent = data;
-  document.querySelector('ul').appendChild(li);
+  $li.text(data);
+  $('ul').append($li);
 })
