@@ -42,6 +42,12 @@ io.on('connection', socket => {
     io.emit('message', `${socket.id.substring(0,5)}: ${data}`);
   })
 
+socket.on('disconnect', () => {
+  socket.broadcast.emit('message', `User ${socket.id.substring(0,5)} has disconnected.`);
+});
+
+// Listen for activity
+
   // When user disconnects - to all others
   
   socket.on('disconnect', () => {
@@ -53,5 +59,4 @@ io.on('connection', socket => {
   socket.on('activity', (name) => {
     socket.broadcast.emit('activity', name);
   });
-})
-
+});
