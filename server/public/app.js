@@ -23,6 +23,7 @@ $('form').on('submit', sendMessage);
 // Listen for messages
 
 socket.on('message', (data) => {
+  $activity.text = '';
   // create an li element
   const $li = $('<li></li>');
   // set content of li to data ( which is the message from the server );
@@ -32,4 +33,15 @@ socket.on('message', (data) => {
 
 $('$msgInput').on('keypress', () => {
   socket.emit('activity', socket.id.substring(0, 5));
+});
+
+let activityTimer 
+socket.on('activity', (name) => {
+  $activity.text = `${name} is typing...`;
+  
+  // Clear after 1 second
+  clearTimeout(activityTimer);
+  activityTimer = setTimeout(() => {
+    $activity.text = '';
+  }, 1000);
 });
