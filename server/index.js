@@ -42,16 +42,16 @@ io.on('connection', socket => {
     io.emit('message', `${socket.id.substring(0,5)}: ${data}`);
   })
 
+  // When user disconnects - to all others
+  
+  socket.on('disconnect', () => {
+    socket.broadcast.emit('message', `User ${socket.id.substring(0,5)} disconnected.`);
+  });
+  
+  // Listen for activity
+  
+  socket.on('activity', (name) => {
+    socket.broadcast.emit('activity', name);
+  });
 })
 
-// When user disconnects - to all others
-
-socket.on('disconnect', () => {
-  socket.broadcast.emit('message', `User ${socket.id.substring(0,5)} disconnected.`);
-});
-
-// Listen for activity
-
-socket.on('activity', (name) => {
-  socket.broadcast.emit('activity', name);
-});
