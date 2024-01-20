@@ -84,7 +84,9 @@ $(document).ready(() => {
     
     // Continue to scroll down as messages append
 
-    $chatDisplay.scrollTop() = $chatDisplay.prop('scrollHeight');
+    const $chatDisplayHeight = $chatDisplay.prop('scrollHeight');
+
+    $chatDisplay.prop('scrollTop', $chatDisplayHeight);
   })
   
   let activityTimer 
@@ -109,11 +111,11 @@ $(document).ready(() => {
     function showUsers(users) {
       $usersList.text('');
       if ($usersList) {
-        $usersList.html(`<em>Users in ${$chatRoom.val()}:</em>`);
+        $usersList.html(`<em>Users in ${$chatRoom.val()}: </em>`);
         users.forEach((user, i) => {
-          $usersList.text(`${user.name}`)
+          $usersList.append(`${user.name}`)
           if (users.length > 1 && i !== users.length - 1) {
-            $usersList.text(',');
+            $usersList.append(', ');
           }
           
         })
@@ -122,11 +124,11 @@ $(document).ready(() => {
     function showRooms(rooms) {
       $roomList.text('');
       if ($roomList) {
-        $roomList.html('<em>Active Rooms:</em>');
+        $roomList.html('<em>Active Rooms: </em>');
         rooms.forEach((room, i) => {
-          $roomList.text(`${room}`)
+          $roomList.append(`${room}`)
           if (rooms.length > 1 && i !== rooms.length - 1) {
-            $roomList.text(',');
+            $roomList.append(',');
           }
           
         })
