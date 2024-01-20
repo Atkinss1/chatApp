@@ -1,6 +1,7 @@
 $(document).ready(() => {
 
-  const socket = io('https://cc1f-96-52-110-15.ngrok-free.app');
+  //! Don't forget to change this address to your new ngrok server OR localhost
+  const socket = io('https://c35e-96-52-110-15.ngrok-free.app');
   
   const $nameInput = $('#name');
   const $chatRoom = $('#room');
