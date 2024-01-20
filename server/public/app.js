@@ -3,8 +3,13 @@ $(document).ready(() => {
   // define socket to create a new WebSocket on port 3000
   const socket = io('ws://localhost:3500');
   
+  const $nameInput = $('#name');
+  const $chatRoom = $('#room');
+  const $msgInput = $('#message');
   const $activity = $('.activity');
-  const $msgInput = $('input');
+  const $usersList = $('.user-list');
+  const $roomList = $('.room-list');
+  const $chatDisplay = $('.chat-display');
   
   
   /**
@@ -13,31 +18,45 @@ $(document).ready(() => {
    */
   function sendMessage(e) {
     e.preventDefault();
-    if ($msgInput.val()) {
-      socket.emit('message', $msgInput.val());
+    if ($msgInput.val() && $nameInput.val() && $chatRoom.val()) {
+      socket.emit('message', {
+        "name" : $nameInput.val(),
+        "text" : $msgInput.val()
+      });
       $msgInput.val('');
     }
     $msgInput.focus();
   }
+
+  /**
+   * Checks name and room input values
+   * @param {} event
+   */
+  function enterRoom(e) {
+    e.preventDefault();
+    if ($nameInput.val() && $chatRoom.val()) {
+      socket.emit('enterRoom', {
+        "name" : $nameInput.val(),
+        "room" : $chatRoom.val()
+      })
+    }
+  }
   
-  $('form').on('submit', sendMessage);
+  // When user submits name and room
+
+  $('.form-join').on('submit', enterRoom);
   
-  // Listen for messages
-  
-  socket.on('message', (data) => {
-    $activity.text('');
-    // create an li element
-    const $li = $('<li></li>');
-    // set content of li to data ( which is the message from the server );
-    $li.text(data);
-    $('ul').append($li);
-  })
-  
+  // When user submits message
+
+  $('.form-message').on('submit', sendMessage);
+
+  // Listen for keypress to activate "user is typing..."
+
   $msgInput.on('keypress', () => {
     console.log('keypressed');
-    socket.emit('activity', socket.id.substring(0, 5));
+    socket.emit('activity', $nameInput.val());
   });
-  
+
   let activityTimer 
   socket.on('activity', (name) => {
     $activity.text(`${name} is typing...`);
@@ -48,4 +67,15 @@ $(document).ready(() => {
       $activity.text('');
     }, 1000);
   });
+  
+  // Listen for messages
+  
+  socket.on('message', (data) => {
+    $activity.text('');
+    
+    const $li = $('<li></li>');
+    
+    $li.text(data);
+    $('ul').append($li);
+  })
 });
