@@ -67,8 +67,8 @@ $(document).ready(() => {
 
     // If name equals name value given, post will align left, else align right
 
-    if (name === $nameInput.val()) $li.attr('post', 'post post--left');
-    if (name !== $nameInput.val() && name !== 'Admin') $li.attr('post', 'post post--right')
+    if (name === $nameInput.val()) $li.attr('class', 'post post--right');
+    if (name !== $nameInput.val() && name !== 'Admin') $li.attr('class', 'post post--left')
     if (name !== 'Admin') {
       $li.html(
       `<div class="post__header ${name === $nameInput.val() ? 'post__header--user' : 'post__header--reply'}">
