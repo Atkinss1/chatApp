@@ -3,12 +3,12 @@
 }
 
 body {
-  background-color: #333;
-  color: #fff;
+  background-color: #4c4a4a;
+  color: #ffffff;
   padding: 1rem;
 }
 
-form {
+.form-join{
   display: flex;
   justify-content: center;
   gap: 4px;
@@ -17,8 +17,21 @@ form {
 ul {
   display: flex;
   flex-flow: column;
-  justify-content: left;
+  justify-content: right;
   list-style-type: none;
+}
+
+ul li {
+  width: 50%;
+  margin: .25rem;
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #31aade59, #899ae06d);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(245, 244, 244, 0.37);
+  transition: all .5s ease;
 }
 
 input,
