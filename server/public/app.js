@@ -1,7 +1,6 @@
 $(document).ready(() => {
 
-  // define socket to create a new WebSocket on port 3000
-  const socket = io('ws://localhost:3500');
+  const socket = io('https://cc1f-96-52-110-15.ngrok-free.app');
   
   const $nameInput = $('#name');
   const $chatRoom = $('#room');
@@ -128,7 +127,7 @@ $(document).ready(() => {
         rooms.forEach((room, i) => {
           $roomList.append(`${room}`)
           if (rooms.length > 1 && i !== rooms.length - 1) {
-            $roomList.append(',');
+            $roomList.append(', ');
           }
           
         })

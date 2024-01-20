@@ -28,8 +28,8 @@ const UsersState = {
 
 const io = new Server(expressServer, {
   cors: {
-    origin: process.env.NODE_ENV === 'production'? false : 
-    ['http://localhost:5500', 'http://localhost:3500']
+    origin: 'https://cc1f-96-52-110-15.ngrok-free.app',
+    methods: ['GET', 'POST']
   }
 })
 
@@ -40,6 +40,10 @@ io.on('connection', socket => {
   // Upon connection - only to user
   
   socket.emit('message', buildMsg(ADMIN, "Welcome to Chat App!"));
+
+  io.emit('roomList', {
+    rooms: getAllActiveRooms()
+  });
 
   socket.on('enterRoom', ({ name, room }) => {
      
