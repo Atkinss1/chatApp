@@ -56,26 +56,82 @@ $(document).ready(() => {
     console.log('keypressed');
     socket.emit('activity', $nameInput.val());
   });
+  
+  // Listen for messages
+  
+  socket.on('message', (data) => {
+    $activity.text('');
+    const { name, text, time } = data;
+    const $li = $('<li></li>');
+    $li.addClass('post');
 
+    // If name equals name value given, post will align left, else align right
+
+    if (name === $nameInput.val()) $li.attr('post', 'post post--left');
+    if (name !== $nameInput.val() && name !== 'Admin') $li.attr('post', 'post post--right')
+    if (name !== 'Admin') {
+      $li.html(
+      `<div class="post__header ${name === $nameInput.val() ? 'post__header--user' : 'post__header--reply'}">
+      <span class="post__header--name">${name}</span>
+      <span class="post__header--time">${time}</span>
+      </div>
+      <div class="post__text">${text}</div>`
+      );
+    } else {
+      $li.html(`<div class="post__text">${text}</div>`);
+    }
+    $chatDisplay.append($li);
+    
+    // Continue to scroll down as messages append
+
+    $chatDisplay.scrollTop() = $chatDisplay.prop('scrollHeight');
+  })
+  
   let activityTimer 
   socket.on('activity', (name) => {
     $activity.text(`${name} is typing...`);
+  });
+
+  socket.on('userList', ({ users }) => {
+    showUsers(users);
+  });
+  
+  socket.on('roomList', ({ rooms }) => {
+    showRooms(rooms);
+  });
     
     // Clear after 1 second
     clearTimeout(activityTimer);
     activityTimer = setTimeout(() => {
       $activity.text('');
     }, 1000);
-  });
-  
-  // Listen for messages
-  
-  socket.on('message', (data) => {
-    $activity.text('');
     
-    const $li = $('<li></li>');
-    
-    $li.text(data);
-    $('ul').append($li);
-  })
+    function showUsers(users) {
+      $usersList.text('');
+      if ($usersList) {
+        $usersList.html(`<em>Users in ${$chatRoom.val()}:</em>`);
+        users.forEach((user, i) => {
+          $usersList.text(`${user.name}`)
+          if (users.length > 1 && i !== users.length - 1) {
+            $usersList.text(',');
+          }
+          
+        })
+      }
+    }
+    function showRooms(rooms) {
+      $roomList.text('');
+      if ($roomList) {
+        $roomList.html('<em>Active Rooms:</em>');
+        rooms.forEach((room, i) => {
+          $roomList.text(`${room}`)
+          if (rooms.length > 1 && i !== rooms.length - 1) {
+            $roomList.text(',');
+          }
+          
+        })
+      }
+    }
 });
+  
+  
