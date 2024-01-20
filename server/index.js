@@ -71,7 +71,7 @@ io.on('connection', socket => {
 
      // Update user list for room
      io.to(user.room).emit('userList', {
-      users: getUsersInRoom(users.room)
+      users: getUsersInRoom(user.room)
      });
 
      // Update rooms list for everyone
