@@ -8,9 +8,16 @@ body {
   padding: 1rem;
 }
 
-.form-join{
+.main {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.form-join,
+.form-message{
+  display: flex;
+  justify-content: space-between;
   gap: 4px;
 }
 
@@ -34,8 +41,11 @@ ul li {
   transition: all .5s ease;
 }
 
-input,
-button {
-  border-radius: 10px;
-  padding: 10px;
+.form-message {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 2rem;
+  width: 75%;
+  z-index: 1;
 }
