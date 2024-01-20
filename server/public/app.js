@@ -84,7 +84,9 @@ $(document).ready(() => {
     
     // Continue to scroll down as messages append
 
-    $chatDisplay.scrollTop() = $chatDisplay.prop('scrollHeight');
+    const $chatDisplayHeight = $chatDisplay.prop('scrollHeight');
+
+    $chatDisplay.prop('scrollTop', $chatDisplayHeight);
   })
   
   let activityTimer 
