@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { Server } from 'socket.io';
 import { fileURLToPath } from 'url';
+import { activateUser, userLeavesApp, getUser, getUsersInRoom, getAllActiveRooms, buildMsg} from './helpers.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,18 +18,10 @@ const expressServer = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
-// state
-const UsersState = {
-  users: [],
-  setUsers: function(newUsersArray) {
-    this.users = newUsersArray;
-  }
-}
-
 //! Don't forget to change cors to your ngrok server or local host
 const io = new Server(expressServer, {
   cors: {
-    origin: 'https://c35e-96-52-110-15.ngrok-free.app',
+    origin: 'localhost:3500',
     methods: ['GET', 'POST']
   }
 })
@@ -126,44 +119,3 @@ io.on('connection', socket => {
     };
   });
 });
-
-function buildMsg(name, text) {
-  return {
-    name,
-    text,
-    time: new Intl.DateTimeFormat('default', {
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric'
-    }).format(new Date())
-  };
-};
-
-// user functions
-
-function activateUser(id, name, room) {
-  const user = { id, name, room };
-  UsersState.setUsers([
-    ...UsersState.users.filter(user => user.id !== id),
-    user
-  ])
-  return user;
-};
-
-function userLeavesApp(id) {
-  UsersState.setUsers(
-    UsersState.users.filter(user => user.id !== id)
-  );
-};
-
-function getUser(id) {
-  return UsersState.users.find(user => user.id === id);
-};
-
-function getUsersInRoom(room) {
-  return UsersState.users.filter(user => user.room === room);
-}
-
-function getAllActiveRooms() {
-  return Array.from(new Set(UsersState.users.map(user => user.room)));
-}
