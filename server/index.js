@@ -41,40 +41,46 @@ io.on('connection', socket => {
   socket.on('enterRoom', ({ name, room }) => {
      
     // leave previous room
-     const prevRoom = getUser(socket.id)?.room
+    const prevRoom = getUser(socket.id)?.room
 
-     if (prevRoom) {
-      socket.leave(prevRoom);
-      io.to(prevRoom).emit('message', buildMsg(ADMIN, `${name} has left the room`));
-     }
+    if (prevRoom) {
+    socket.leave(prevRoom);
+    io.to(prevRoom).emit('message', buildMsg(ADMIN, `${name} has left the room`));
+    }
 
-     const user = activateUser(socket.id, name, room);
+    const user = activateUser(socket.id, name, room);
 
-     // Cannot update previous room useres list until after the state update in activate user
-     if (prevRoom) {
-      io.to(prevRoom).emit('userList', {
-        users: getUsersInRoom(prevRoom)
-      });
-     };
 
-     //Join room
-     socket.join(user.room);
+    // Cannot update previous room useres list until after the state update in activate user
+    if (prevRoom) {
+    io.to(prevRoom).emit('userList', {
+      users: getUsersInRoom(prevRoom)
+    });
+    };
 
-     // To user who joined
-     socket.emit('message', buildMsg(ADMIN, `You have joined the ${user.room} chat room`));
+    if (!user) {
+      const text = `Username '${name}' already exists. Please choose a different name.`
+      io.to(socket.id).emit('message', buildMsg(ADMIN, text));
+      } else {
+        //Join room
+        socket.join(user.room);
 
-     // To everyone else
-     socket.broadcast.to(user.room).emit('message', buildMsg(ADMIN, `${user.name} has joined the room`));
+        // To user who joined
+        socket.emit('message', buildMsg(ADMIN, `You have joined the ${user.room} chat room`));
 
-     // Update user list for room
-     io.to(user.room).emit('userList', {
-      users: getUsersInRoom(user.room)
-     });
+        // To everyone else
+        socket.broadcast.to(user.room).emit('message', buildMsg(ADMIN, `${user.name} has joined the room`));
 
-     // Update rooms list for everyone
-     io.emit('roomList', {
-      rooms: getAllActiveRooms()
-     });
+        // Update user list for room
+        io.to(user.room).emit('userList', {
+        users: getUsersInRoom(user.room)
+        });
+
+        // Update rooms list for everyone
+        io.emit('roomList', {
+        rooms: getAllActiveRooms()
+        });
+      }
   });
 
   // When user disconnects - to all others

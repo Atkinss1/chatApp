@@ -19,6 +19,13 @@ export function buildMsg(name, text) {
 };
 
 export function activateUser(id, name, room) {
+  const usernameExists = UsersState.users.some(user => user.name === name);
+
+  if (usernameExists) {
+    console.error(`Username '${name}' already exists. Please choose a different name.`);
+    return null;
+  }
+
   const user = { id, name, room };
   UsersState.setUsers([
     ...UsersState.users.filter(user => user.id !== id),
