@@ -6,6 +6,10 @@
   <title>chat App</title>
   <!-- CSS Styling -->
   <link href="style.css" rel="stylesheet">
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Kanit&family=Source+Sans+3:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
   <!-- Socket.io -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.min.js" integrity="sha512-skuhu6jj+sQnhLq1Txsack8VfnIrX8wL+MTFilYlFFT/NuLJm7eya7zOROs39Jy5cjASMEWqxLzijRVmKhsqWQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <!-- JavaScript -->
@@ -19,26 +23,58 @@
 
 <body>
   
-  <main>
+  <div class="outer-list-container">
+    
+    <div class="list-container">
+      
+      <p class="room-list"></p> 
+      
+      <p class="user-list"></p>
+    
+    </div>
+  
+  </div>
+ 
+  <div class="main-container">
+    
+    <div class="user-form">
+    
     <form class="form-join" autocomplete="off">
+      
       <input type="text" id="name" maxlength="8" placeholder="Your name" size="10" required>
       <input type="text" id="room" placeholder="Chat Room" size="10" required>
       <button id="join" type="submit">Join</button>
+    
     </form>
+    
+    </div>
 
-    <ul class="chat-display"></ul>
+    <div class="chat-container">
+    
+      <ul class="chat-display"></ul>
+      
+      <p class="activity"></p>
+  
+    </div>
 
-    <p class="user-list"></p>
+    <div class="msg-form">
 
-    <p class="room-list"></p>
+      <form class="form-message" autocomplete="off">
+        <input type="text" id="message" placeholder="Your message" required>
+        <button type="submit">Send</button>
+      </form>
+    
+    </div>
+  
+  </div>
+  
+  
+  
+    
 
-    <p class="activity"></p>
-
-    <form class="form-message" autocomplete="off">
-      <input type="text" id="message" placeholder="Your message" required>
-      <button type="submit">Send</button>
-    </form>
-  </main>
+  
+  
+  
   
 </body>
 
