@@ -28,7 +28,7 @@ const UsersState = {
 //! Don't forget to change cors to your ngrok server or local host
 const io = new Server(expressServer, {
   cors: {
-    origin: 'https://c35e-96-52-110-15.ngrok-free.app',
+    origin: 'http://localhost:3500',
     methods: ['GET', 'POST']
   }
 })
