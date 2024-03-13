@@ -86,9 +86,6 @@ Before you begin, make sure you have the following installed on your machine:
 
 3. Enter a username and room, then start chatting!
 
-## Contributing
-
-If you would like to contribute to this project, please follow the guidelines in the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 ## License
 
