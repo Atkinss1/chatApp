@@ -91,9 +91,6 @@ Before you begin, make sure you have the following installed on your machine:
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
-## Acknowledgments
-
-- I'd like to acknowledge [Dave Gray](https://www.youtube.com/@DaveGrayTeachesCode) for doing a tutorial at YouTube on Socket.io, it has made it easier to get a basic understanding of the Socket.io library. 
 
 - This project was inspired by the need for a basic real-time chat application for learning purposes.
 
